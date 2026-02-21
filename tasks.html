@@ -9,62 +9,111 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', sans-serif; background: #0f172a; color: white; min-height: 100vh; }
         
-        .header { background: linear-gradient(135deg, #0ea5e9, #8b5cf6); padding: 24px 40px; display: flex; justify-content: space-between; align-items: center; }
-        .header h1 { font-size: 24px; }
-        .header-btn { background: white; color: #0f172a; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+        /* Header */
+        .header { background: linear-gradient(135deg, #0ea5e9, #8b5cf6); padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; }
+        .header h1 { font-size: 22px; }
+        .header-btn { background: white; color: #0f172a; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
         .header-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
         
-        .kanban { display: flex; gap: 24px; padding: 32px 40px; overflow-x: auto; }
-        .column { flex: 1; min-width: 300px; max-width: 350px; }
-        .column-header { padding: 16px 20px; border-radius: 12px 12px 0 0; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; }
+        /* Agent Status Bar */
+        .agent-bar { background: #1e293b; padding: 16px 40px; display: flex; gap: 16px; overflow-x: auto; border-bottom: 1px solid #334155; }
+        .agent-pill { display: flex; align-items: center; gap: 8px; padding: 8px 16px; background: #0f172a; border-radius: 24px; font-size: 13px; white-space: nowrap; }
+        .agent-pill .dot { width: 8px; height: 8px; border-radius: 50%; }
+        .agent-active { background: #10b981; }
+        .agent-busy { background: #f59e0b; }
+        .agent-offline { background: #64748b; }
+        
+        /* Kanban */
+        .kanban { display: flex; gap: 24px; padding: 24px 40px; overflow-x: auto; }
+        .column { flex: 1; min-width: 280px; max-width: 320px; }
+        .column-header { padding: 14px 18px; border-radius: 10px 10px 0 0; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; }
         .column-todo { background: linear-gradient(135deg, #f59e0b, #d97706); }
         .column-inprogress { background: linear-gradient(135deg, #3b82f6, #2563eb); }
         .column-done { background: linear-gradient(135deg, #10b981, #059669); }
-        .column-header h2 { font-size: 16px; font-weight: 700; }
-        .task-count { background: rgba(255,255,255,0.2); padding: 4px 10px; border-radius: 20px; font-size: 13px; }
+        .column-header h2 { font-size: 14px; font-weight: 700; }
+        .task-count { background: rgba(255,255,255,0.2); padding: 3px 10px; border-radius: 20px; font-size: 12px; }
         
-        .task-list { min-height: 200px; }
-        .task-card { background: #1e293b; border-radius: 10px; padding: 16px; margin-bottom: 12px; border: 1px solid #334155; cursor: grab; transition: all 0.2s; }
-        .task-card:hover { border-color: #475569; transform: translateY(-2px); }
+        .task-list { min-height: 150px; }
+        .task-card { background: #1e293b; border-radius: 10px; padding: 14px; margin-bottom: 10px; border: 1px solid #334155; cursor: pointer; transition: all 0.2s; }
+        .task-card:hover { border-color: #475569; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
         .task-card.dragging { opacity: 0.5; cursor: grabbing; }
-        .task-title { font-weight: 600; font-size: 14px; margin-bottom: 8px; }
-        .task-meta { display: flex; flex-wrap: wrap; gap: 8px; }
-        .task-tag { padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: 600; }
+        .task-title { font-weight: 600; font-size: 13px; margin-bottom: 8px; line-height: 1.4; }
+        .task-meta { display: flex; flex-wrap: wrap; gap: 6px; }
+        .task-tag { padding: 3px 8px; border-radius: 5px; font-size: 10px; font-weight: 600; }
         .tag-high { background: #fee2e2; color: #dc2626; }
         .tag-medium { background: #fef3c7; color: #d97706; }
         .tag-low { background: #dbeafe; color: #2563eb; }
         .tag-agent { background: #f3e8ff; color: #7c3aed; }
         
-        .drop-zone { min-height: 100px; border-radius: 8px; transition: all 0.2s; }
-        .drop-zone.drag-over { background: rgba(59, 130, 246, 0.2); border: 2px dashed #3b82f6; }
+        .drop-zone { min-height: 80px; border-radius: 8px; transition: all 0.2s; }
+        .drop-zone.drag-over { background: rgba(59, 130, 246, 0.15); border: 2px dashed #3b82f6; }
         
-        .modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 1000; align-items: center; justify-content: center; }
+        /* Modal */
+        .modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); z-index: 1000; align-items: center; justify-content: center; }
         .modal.active { display: flex; }
-        .modal-content { background: #1e293b; border-radius: 16px; padding: 32px; width: 100%; max-width: 480px; }
-        .modal h2 { font-size: 20px; margin-bottom: 24px; }
-        .form-group { margin-bottom: 20px; }
-        .form-group label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 8px; color: #94a3b8; }
-        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px 16px; background: #0f172a; border: 1px solid #334155; border-radius: 8px; color: white; font-size: 14px; }
+        .modal-content { background: #1e293b; border-radius: 16px; padding: 28px; width: 100%; max-width: 500px; max-height: 90vh; overflow-y: auto; }
+        .modal h2 { font-size: 18px; margin-bottom: 20px; }
+        .form-group { margin-bottom: 16px; }
+        .form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: #94a3b8; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px 14px; background: #0f172a; border: 1px solid #334155; border-radius: 8px; color: white; font-size: 14px; font-family: inherit; }
         .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: #0ea5e9; }
-        .form-actions { display: flex; gap: 12px; justify-content: flex-end; }
-        .btn { padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; border: none; }
+        .form-group textarea { min-height: 100px; resize: vertical; }
+        .form-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; }
+        .btn { padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; border: none; font-size: 14px; }
         .btn-primary { background: linear-gradient(135deg, #0ea5e9, #8b5cf6); color: white; }
         .btn-secondary { background: #334155; color: white; }
+        .btn-danger { background: #dc2626; color: white; }
         
-        .empty-state { text-align: center; padding: 40px; color: #64748b; font-size: 14px; }
+        /* Task Detail Modal */
+        .detail-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
+        .detail-title { font-size: 20px; font-weight: 700; }
+        .detail-close { background: none; border: none; color: #64748b; font-size: 24px; cursor: pointer; }
+        .detail-section { margin-bottom: 20px; }
+        .detail-section h3 { font-size: 12px; text-transform: uppercase; color: #64748b; margin-bottom: 8px; letter-spacing: 0.5px; }
+        .detail-content { font-size: 14px; line-height: 1.6; color: #cbd5e1; }
+        .detail-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+        .detail-actions { display: flex; gap: 10px; margin-top: 24px; padding-top: 20px; border-top: 1px solid #334155; }
         
-        .task-menu { position: absolute; right: 8px; top: 8px; background: none; border: none; color: #64748b; cursor: pointer; padding: 4px; }
-        .task-menu:hover { color: white; }
-        .task-card { position: relative; }
-        
-        .delete-btn { position: absolute; right: 8px; top: 8px; background: none; border: none; color: #64748b; cursor: pointer; padding: 4px; font-size: 16px; }
-        .delete-btn:hover { color: #ef4444; }
+        /* Empty state */
+        .empty-state { text-align: center; padding: 30px; color: #64748b; font-size: 13px; }
     </style>
 </head>
 <body>
     <div class="header">
         <h1>🎯 Journey Forge Task Manager</h1>
         <button class="header-btn" onclick="openModal()">+ Add Task</button>
+    </div>
+    
+    <!-- Agent Status Bar -->
+    <div class="agent-bar">
+        <div class="agent-pill">
+            <span class="dot agent-active"></span>
+            🤖 Potential Bot (Me)
+        </div>
+        <div class="agent-pill">
+            <span class="dot agent-busy"></span>
+            ✍️ Content Chief
+        </div>
+        <div class="agent-pill">
+            <span class="dot agent-busy"></span>
+            📱 Social Media Lead
+        </div>
+        <div class="agent-pill">
+            <span class="dot agent-offline"></span>
+            🔍 SEO Specialist
+        </div>
+        <div class="agent-pill">
+            <span class="dot agent-active"></span>
+            📊 Market Analyst
+        </div>
+        <div class="agent-pill">
+            <span class="dot agent-active"></span>
+            🎨 Creative Designer
+        </div>
+        <div class="agent-pill">
+            <span class="dot agent-offline"></span>
+            🌐 Web Developer
+        </div>
     </div>
     
     <div class="kanban">
@@ -108,26 +157,26 @@
                 <div class="form-group">
                     <label>Priority</label>
                     <select id="taskPriority">
-                        <option value="high">High</option>
-                        <option value="medium" selected>Medium</option>
-                        <option value="low">Low</option>
+                        <option value="high">🔴 High</option>
+                        <option value="medium" selected>🟡 Medium</option>
+                        <option value="low">🔵 Low</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label>Assign To</label>
                     <select id="taskAgent">
-                        <option value="me">Potential Bot (Delegate)</option>
-                        <option value="content-chief">Content Chief</option>
-                        <option value="social-lead">Social Media Lead</option>
-                        <option value="seo-specialist">SEO Specialist</option>
-                        <option value="market-analyst">Market Analyst</option>
-                        <option value="creative-designer">Creative Designer</option>
-                        <option value="web-developer">Web Developer</option>
+                        <option value="me">🤖 Potential Bot (Delegate)</option>
+                        <option value="content-chief">✍️ Content Chief</option>
+                        <option value="social-lead">📱 Social Media Lead</option>
+                        <option value="seo-specialist">🔍 SEO Specialist</option>
+                        <option value="market-analyst">📊 Market Analyst</option>
+                        <option value="creative-designer">🎨 Creative Designer</option>
+                        <option value="web-developer">🌐 Web Developer</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>Description (Optional)</label>
-                    <textarea id="taskDesc" rows="3" placeholder="Add details..."></textarea>
+                    <label>Description & Requirements</label>
+                    <textarea id="taskDesc" placeholder="Describe the task in detail. What is needed? What should be done?"></textarea>
                 </div>
                 <div class="form-actions">
                     <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
@@ -137,19 +186,108 @@
         </div>
     </div>
     
+    <!-- Task Detail Modal -->
+    <div class="modal" id="detailModal">
+        <div class="modal-content">
+            <div class="detail-header">
+                <div class="detail-title" id="detailTitle"></div>
+                <button class="detail-close" onclick="closeDetailModal()">×</button>
+            </div>
+            <div class="detail-tags" style="margin-bottom: 20px;">
+                <span class="task-tag" id="detailPriority"></span>
+                <span class="task-tag tag-agent" id="detailAgent"></span>
+                <span class="task-tag" id="detailStatus"></span>
+            </div>
+            <div class="detail-section">
+                <h3>Description & Requirements</h3>
+                <div class="detail-content" id="detailDesc"></div>
+            </div>
+            <div class="detail-section">
+                <h3>Created</h3>
+                <div class="detail-content" id="detailCreated"></div>
+            </div>
+            <div class="detail-actions">
+                <button class="btn btn-secondary" onclick="editTask()">✏️ Edit</button>
+                <button class="btn btn-danger" onclick="deleteCurrentTask()">🗑️ Delete</button>
+            </div>
+        </div>
+    </div>
+    
     <script>
         // Task storage
         let tasks = JSON.parse(localStorage.getItem('journeyforge-tasks')) || [
-            { id: 1, title: 'Launch Social Media Accounts', priority: 'high', agent: 'social-lead', status: 'todo', desc: 'Create @journeyforge on Twitter & Instagram' },
-            { id: 2, title: 'Set Up Email Newsletter', priority: 'medium', agent: 'content-chief', status: 'todo', desc: 'Mailchimp or similar' },
-            { id: 3, title: 'Influencer Outreach', priority: 'medium', agent: 'social-lead', status: 'todo', desc: 'Contact travel bloggers' },
-            { id: 4, title: 'Multilogin Browser Setup', priority: 'high', agent: 'me', status: 'inprogress', desc: 'Fix automation issues' },
-            { id: 5, title: 'SEO Implementation', priority: 'medium', agent: 'seo-specialist', status: 'inprogress', desc: 'Optimize site for keywords' },
-            { id: 6, title: 'Marketing Website v2', priority: 'high', agent: 'web-developer', status: 'done', desc: 'World-class multi-page site' },
-            { id: 7, title: 'Seoul Blog Post', priority: 'high', agent: 'content-chief', status: 'done', desc: 'Complete travel guide' },
-            { id: 8, title: 'Tokyo Blog Post', priority: 'high', agent: 'content-chief', status: 'done', desc: 'Complete travel guide' },
-            { id: 9, title: 'Perth Blog Post', priority: 'medium', agent: 'me', status: 'done', desc: '10 things to do' },
-            { id: 10, title: 'Birmingham Blog Post', priority: 'medium', agent: 'me', status: 'done', desc: '10 things to do' }
+            { 
+                id: 1, 
+                title: 'Launch Social Media Accounts', 
+                priority: 'high', 
+                agent: 'social-lead', 
+                status: 'todo', 
+                desc: 'Create @journeyforge on Twitter and Instagram. Need: profile pics, bio, branding. Post initial content.',
+                created: '2026-02-19'
+            },
+            { 
+                id: 2, 
+                title: 'Set Up Email Newsletter', 
+                priority: 'medium', 
+                agent: 'content-chief', 
+                status: 'todo', 
+                desc: 'Set up Mailchimp or similar. Create signup forms for website. Design email template.',
+                created: '2026-02-19'
+            },
+            { 
+                id: 3, 
+                title: 'Influencer Outreach', 
+                priority: 'medium', 
+                agent: 'social-lead', 
+                status: 'todo', 
+                desc: 'Contact travel bloggers and influencers. Send partnership proposals. Track responses.',
+                created: '2026-02-19'
+            },
+            { 
+                id: 4, 
+                title: 'Multilogin Browser Setup', 
+                priority: 'high', 
+                agent: 'me', 
+                status: 'inprogress', 
+                desc: 'Fix Multilogin automation on VPS. Launcher keeps dying. Need to investigate port binding and process management.',
+                created: '2026-02-20'
+            },
+            { 
+                id: 5, 
+                title: 'SEO Implementation', 
+                priority: 'medium', 
+                agent: 'seo-specialist', 
+                status: 'inprogress', 
+                desc: 'Implement keyword optimizations. Add meta tags, schema markup, internal linking. Monitor rankings.',
+                created: '2026-02-19'
+            },
+            { 
+                id: 6, 
+                title: 'Marketing Website v2', 
+                priority: 'high', 
+                agent: 'web-developer', 
+                status: 'done', 
+                desc: 'World-class multi-page marketing site. Responsive design, SEO optimized, blog section.',
+                created: '2026-02-19'
+            },
+            { 
+                id: 7, 
+                title: 'Seoul Blog Post', 
+                priority: 'high', 
+                agent: 'content-chief', 
+                status: 'done', 
+                desc: 'Complete travel guide for Seoul. Includes itinerary, food recommendations, and tips.',
+                created: '2026-02-20'
+            },
+            { 
+                id: 8, 
+                title: 'Tokyo Blog Post', 
+                priority: 'high', 
+                agent: 'content-chief', 
+                status: 'done', 
+                desc: 'Ultimate Tokyo travel guide with 7-day itinerary, neighborhood breakdowns, food guide.',
+                created: '2026-02-20'
+            }
         ];
         
         const agentNames = {
@@ -163,10 +301,12 @@
         };
         
         const priorityTags = {
-            'high': { class: 'tag-high', text: 'High' },
-            'medium': { class: 'tag-medium', text: 'Medium' },
-            'low': { class: 'tag-low', text: 'Low' }
+            'high': { class: 'tag-high', text: '🔴 High Priority' },
+            'medium': { class: 'tag-medium', text: '🟡 Medium' },
+            'low': { class: 'tag-low', text: '🔵 Low' }
         };
+        
+        let currentTaskId = null;
         
         function renderTasks() {
             document.getElementById('todo').innerHTML = '';
@@ -180,16 +320,15 @@
                 el.className = 'task-card';
                 el.draggable = true;
                 el.dataset.id = task.id;
+                el.onclick = () => openDetailModal(task.id);
                 el.innerHTML = `
                     <div class="task-title">${task.title}</div>
-                    <button class="delete-btn" onclick="deleteTask(${task.id})">×</button>
                     <div class="task-meta">
                         <span class="task-tag ${priorityTags[task.priority].class}">${priorityTags[task.priority].text}</span>
                         <span class="task-tag tag-agent">${agentNames[task.agent]}</span>
                     </div>
                 `;
                 
-                // Drag events
                 el.addEventListener('dragstart', handleDragStart);
                 el.addEventListener('dragend', handleDragEnd);
                 
@@ -214,7 +353,6 @@
             document.querySelectorAll('.drop-zone').forEach(z => z.classList.remove('drag-over'));
         }
         
-        // Drop zones
         document.querySelectorAll('.drop-zone').forEach(zone => {
             zone.addEventListener('dragover', e => {
                 e.preventDefault();
@@ -238,15 +376,7 @@
             localStorage.setItem('journeyforge-tasks', JSON.stringify(tasks));
         }
         
-        function deleteTask(id) {
-            if (confirm('Delete this task?')) {
-                tasks = tasks.filter(t => t.id !== id);
-                saveTasks();
-                renderTasks();
-            }
-        }
-        
-        // Modal
+        // Modal functions
         function openModal() {
             document.getElementById('modal').classList.add('active');
         }
@@ -256,7 +386,64 @@
             document.getElementById('taskForm').reset();
         }
         
-        document.getElementById('taskForm').addEventListener('submit', e => {
+        function openDetailModal(id) {
+            const task = tasks.find(t => t.id === id);
+            if (!task) return;
+            
+            currentTaskId = id;
+            document.getElementById('detailTitle').textContent = task.title;
+            document.getElementById('detailPriority').className = `task-tag ${priorityTags[task.priority].class}`;
+            document.getElementById('detailPriority').textContent = priorityTags[task.priority].text;
+            document.getElementById('detailAgent').textContent = agentNames[task.agent];
+            document.getElementById('detailStatus').textContent = task.status === 'done' ? '✅ Done' : task.status === 'inprogress' ? '🔥 In Progress' : '📋 To Do';
+            document.getElementById('detailDesc').textContent = task.desc || 'No description provided.';
+            document.getElementById('detailCreated').textContent = task.created || 'N/A';
+            
+            document.getElementById('detailModal').classList.add('active');
+        }
+        
+        function closeDetailModal() {
+            document.getElementById('detailModal').classList.remove('active');
+            currentTaskId = null;
+        }
+        
+        function deleteCurrentTask() {
+            if (currentTaskId && confirm('Delete this task?')) {
+                tasks = tasks.filter(t => t.id !== currentTaskId);
+                saveTasks();
+                renderTasks();
+                closeDetailModal();
+            }
+        }
+        
+        function editTask() {
+            if (!currentTaskId) return;
+            const task = tasks.find(t => t.id === currentTaskId);
+            if (!task) return;
+            
+            closeDetailModal();
+            document.getElementById('taskTitle').value = task.title;
+            document.getElementById('taskPriority').value = task.priority;
+            document.getElementById('taskAgent').value = task.agent;
+            document.getElementById('taskDesc').value = task.desc;
+            
+            // Override form submit to update instead
+            const form = document.getElementById('taskForm');
+            form.onsubmit = function(e) {
+                e.preventDefault();
+                task.title = document.getElementById('taskTitle').value;
+                task.priority = document.getElementById('taskPriority').value;
+                task.agent = document.getElementById('taskAgent').value;
+                task.desc = document.getElementById('taskDesc').value;
+                saveTasks();
+                renderTasks();
+                closeModal();
+                form.onsubmit = addTaskHandler;
+            };
+            openModal();
+        }
+        
+        function addTaskHandler(e) {
             e.preventDefault();
             const newTask = {
                 id: Date.now(),
@@ -264,17 +451,23 @@
                 priority: document.getElementById('taskPriority').value,
                 agent: document.getElementById('taskAgent').value,
                 status: 'todo',
-                desc: document.getElementById('taskDesc').value
+                desc: document.getElementById('taskDesc').value,
+                created: new Date().toISOString().split('T')[0]
             };
             tasks.push(newTask);
             saveTasks();
             renderTasks();
             closeModal();
-        });
+        }
         
-        // Close modal on outside click
+        document.getElementById('taskForm').addEventListener('submit', addTaskHandler);
+        
         document.getElementById('modal').addEventListener('click', e => {
             if (e.target.id === 'modal') closeModal();
+        });
+        
+        document.getElementById('detailModal').addEventListener('click', e => {
+            if (e.target.id === 'detailModal') closeDetailModal();
         });
         
         renderTasks();
