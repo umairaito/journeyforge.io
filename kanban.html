@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mission Control - Journey Forge Kanban</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        body { background: #0f172a; color: white; min-height: 100vh; }
+        .kanban-container { display: flex; gap: 24px; padding: 40px; max-width: 1400px; margin: 0 auto; overflow-x: auto; }
+        .kanban-column { flex: 1; min-width: 320px; }
+        .column-header { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; border-radius: 12px 12px 0 0; margin-bottom: 16px; }
+        .column-todo { background: linear-gradient(135deg, #f59e0b, #d97706); }
+        .column-inprogress { background: linear-gradient(135deg, #3b82f6, #2563eb); }
+        .column-done { background: linear-gradient(135deg, #10b981, #059669); }
+        .column-header h2 { font-size: 18px; font-weight: 700; color: white; margin: 0; }
+        .task-count { background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 20px; font-size: 14px; font-weight: 600; }
+        .task-card { background: #1e293b; border-radius: 12px; padding: 20px; margin-bottom: 12px; border: 1px solid #334155; transition: all 0.2s; }
+        .task-card:hover { border-color: #475569; transform: translateY(-2px); }
+        .task-title { font-weight: 600; font-size: 15px; margin-bottom: 8px; color: #f1f5f9; }
+        .task-meta { display: flex; gap: 12px; font-size: 13px; color: #94a3b8; }
+        .task-tag { padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; }
+        .tag-high { background: #fee2e2; color: #dc2626; }
+        .tag-medium { background: #fef3c7; color: #d97706; }
+        .tag-low { background: #dbeafe; color: #2563eb; }
+        .agent-avatar { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; }
+        .agent-online { background: #10b981; color: white; }
+        .agent-busy { background: #f59e0b; color: white; }
+        .agent-offline { background: #64748b; color: white; }
+        .agents-section { background: #1e293b; border-radius: 16px; padding: 24px; margin: 0 40px 40px; }
+        .agents-section h2 { font-size: 20px; margin-bottom: 20px; color: #f1f5f9; }
+        .agents-grid { display: flex; flex-wrap: wrap; gap: 16px; }
+        .agent-card { background: #0f172a; padding: 16px; border-radius: 12px; display: flex; align-items: center; gap: 12px; min-width: 200px; }
+        .agent-info h4 { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+        .agent-info span { font-size: 12px; color: #94a3b8; }
+        .status-badge { padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; text-transform: uppercase; }
+        .status-active { background: #d1fae5; color: #059669; }
+        .status-available { background: #dbeafe; color: #2563eb; }
+        .status-busy { background: #fef3c7; color: #d97706; }
+        .page-header { background: linear-gradient(135deg, #0f172a, #1e1b4b); padding: 40px; text-align: center; }
+        .page-header h1 { font-size: 36px; margin-bottom: 8px; }
+        .page-header p { color: #94a3b8; }
+    </style>
+</head>
+<body>
+    <div class="page-header">
+        <h1>🎯 Journey Forge Mission Control</h1>
+        <p>Track tasks and agent status in real-time</p>
+    </div>
+
+    <!-- Agents Status -->
+    <div class="agents-section">
+        <h2>👥 Agent Team Status</h2>
+        <div class="agents-grid">
+            <div class="agent-card">
+                <div class="agent-avatar agent-online">🤖</div>
+                <div class="agent-info">
+                    <h4>Potential Bot (Me)</h4>
+                    <span>CMO / Lead</span>
+                </div>
+                <span class="status-badge status-active">Active</span>
+            </div>
+            <div class="agent-card">
+                <div class="agent-avatar agent-busy">✍️</div>
+                <div class="agent-info">
+                    <h4>Content Chief</h4>
+                    <span>Blog & Newsletters</span>
+                </div>
+                <span class="status-badge status-available">Available</span>
+            </div>
+            <div class="agent-card">
+                <div class="agent-avatar agent-busy">📱</div>
+                <div class="agent-info">
+                    <h4>Social Media Lead</h4>
+                    <span>Twitter & Instagram</span>
+                </div>
+                <span class="status-badge status-available">Available</span>
+            </div>
+            <div class="agent-card">
+                <div class="agent-avatar agent-offline">🔍</div>
+                <div class="agent-info">
+                    <h4>SEO Specialist</h4>
+                    <span>Keywords & Optimization</span>
+                </div>
+                <span class="status-badge status-busy">Partial</span>
+            </div>
+            <div class="agent-card">
+                <div class="agent-avatar agent-online">📊</div>
+                <div class="agent-info">
+                    <h4>Market Analyst</h4>
+                    <span>Research & Pricing</span>
+                </div>
+                <span class="status-badge status-active">Completed</span>
+            </div>
+            <div class="agent-card">
+                <div class="agent-avatar agent-busy">🎨</div>
+                <div class="agent-info">
+                    <h4>Creative Designer</h4>
+                    <span>Ads & Branding</span>
+                </div>
+                <span class="status-badge status-active">Completed</span>
+            </div>
+            <div class="agent-card">
+                <div class="agent-avatar agent-offline">🌐</div>
+                <div class="agent-info">
+                    <h4>Web Developer</h4>
+                    <span>Sites & Apps</span>
+                </div>
+                <span class="status-badge status-busy">Timed Out</span>
+            </div>
+            <div class="agent-card">
+                <div class="agent-avatar agent-busy">🔎</div>
+                <div class="agent-info">
+                    <h4>Hotel Finder</h4>
+                    <span>Accommodation Search</span>
+                </div>
+                <span class="status-badge status-available">Available</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Kanban Board -->
+    <div class="kanban-container">
+        <!-- To Do Column -->
+        <div class="kanban-column">
+            <div class="column-header column-todo">
+                <h2>📋 To Do</h2>
+                <span class="task-count">5</span>
+            </div>
+            <div class="task-card">
+                <div class="task-title">Launch Social Media Accounts</div>
+                <div class="task-meta">
+                    <span class="task-tag tag-high">High Priority</span>
+                    <span>Social Media Lead</span>
+                </div>
+            </div>
+            <div class="task-card">
+                <div class="task-title">Set Up Email Newsletter</div>
+                <div class="task-meta">
+                    <span class="task-tag tag-medium">Medium</span>
+                    <span>Content Chief</span>
+                </div>
+            </div>
+            <div class="task-card">
+                <div class="task-title">Influencer Outreach</div>
+                <div class="task-meta">
+                    <span class="task-tag tag-medium">Medium</span>
+                    <span>Social Media Lead</span>
+                </div>
+            </div>
+            <div class="task-card">
+                <div class="task-title">Set Up Paid Ads (Google, Meta)</div>
+                <div class="task-meta">
+                    <span class="task-tag tag-low">Low</span>
+                    <span>Marketing</span>
+                </div>
+            </div>
+            <div class="task-card">
+                <div class="task-title">Press Release</div>
+                <div class="task-meta">
+                    <span class="task-tag tag-low">Low</span>
+                    <span>PR</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- In Progress Column -->
+        <div class="kanban-column">
+            <div class="column-header column-inprogress">
+                <h2>🔥 In Progress</h2>
+                <span class="task-count">2</span>
+            </div>
+            <div class="task-card">
+                <div class="task-title">Multilogin Browser Automation</div>
+                <div class="task-meta">
+                    <span class="task-tag tag-high">High Priority</span>
+                    <span>Potential Bot</span>
+                </div>
+            </div>
+            <div class="task-card">
+                <div class="task-title">SEO Implementation</div>
+                <div class="task-meta">
+                    <span class="task-tag tag-medium">Medium</span>
+                    <span>SEO Specialist</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Done Column -->
+        <div class="kanban-column">
+            <div class="column-header column-done">
+                <h2>✅ Done</h2>
+                <span class="task-count">8</span>
+            </div>
+            <div class="task-card">
+                <div class="task-title">Marketing Website v2</div>
+                <div class="task-meta">
+                    <span>Web Developer</span>
+                </div>
+            </div>
+            <div class="task-card">
+                <div class="task-title">Seoul Travel Guide Blog</div>
+                <div class="task-meta">
+                    <span>Content Chief</span>
+                </div>
+            </div>
+            <div class="task-card">
+                <div class="task-title">Tokyo Travel Guide Blog</div>
+                <div class="task-meta">
+                    <span>Content Chief</span>
+                </div>
+            </div>
+            <div class="task-card">
+                <div class="task-title">Perth Travel Guide Blog</div>
+                <div class="task-meta">
+                    <span>Content Chief</span>
+                </div>
+            </div>
+            <div class="task-card">
+                <div class="task-title">Birmingham Travel Guide Blog</div>
+                <div class="task-meta">
+                    <span>Potential Bot</span>
+                </div>
+            </div>
+            <div class="task-card">
+                <div class="task-title">Mission Control Setup</div>
+                <div class="task-meta">
+                    <span>Potential Bot</span>
+                </div>
+            </div>
+            <div class="task-card">
+                <div class="task-title">Market Analysis</div>
+                <div class="task-meta">
+                    <span>Market Analyst</span>
+                </div>
+            </div>
+            <div class="task-card">
+                <div class="task-title">Brand Guidelines</div>
+                <div class="task-meta">
+                    <span>Creative Designer</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
