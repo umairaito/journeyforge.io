@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Journey Forge Task Manager</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #0f172a; color: white; min-height: 100vh; }
+        
+        .header { background: linear-gradient(135deg, #0ea5e9, #8b5cf6); padding: 24px 40px; display: flex; justify-content: space-between; align-items: center; }
+        .header h1 { font-size: 24px; }
+        .header-btn { background: white; color: #0f172a; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+        .header-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+        
+        .kanban { display: flex; gap: 24px; padding: 32px 40px; overflow-x: auto; }
+        .column { flex: 1; min-width: 300px; max-width: 350px; }
+        .column-header { padding: 16px 20px; border-radius: 12px 12px 0 0; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; }
+        .column-todo { background: linear-gradient(135deg, #f59e0b, #d97706); }
+        .column-inprogress { background: linear-gradient(135deg, #3b82f6, #2563eb); }
+        .column-done { background: linear-gradient(135deg, #10b981, #059669); }
+        .column-header h2 { font-size: 16px; font-weight: 700; }
+        .task-count { background: rgba(255,255,255,0.2); padding: 4px 10px; border-radius: 20px; font-size: 13px; }
+        
+        .task-list { min-height: 200px; }
+        .task-card { background: #1e293b; border-radius: 10px; padding: 16px; margin-bottom: 12px; border: 1px solid #334155; cursor: grab; transition: all 0.2s; }
+        .task-card:hover { border-color: #475569; transform: translateY(-2px); }
+        .task-card.dragging { opacity: 0.5; cursor: grabbing; }
+        .task-title { font-weight: 600; font-size: 14px; margin-bottom: 8px; }
+        .task-meta { display: flex; flex-wrap: wrap; gap: 8px; }
+        .task-tag { padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: 600; }
+        .tag-high { background: #fee2e2; color: #dc2626; }
+        .tag-medium { background: #fef3c7; color: #d97706; }
+        .tag-low { background: #dbeafe; color: #2563eb; }
+        .tag-agent { background: #f3e8ff; color: #7c3aed; }
+        
+        .drop-zone { min-height: 100px; border-radius: 8px; transition: all 0.2s; }
+        .drop-zone.drag-over { background: rgba(59, 130, 246, 0.2); border: 2px dashed #3b82f6; }
+        
+        .modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 1000; align-items: center; justify-content: center; }
+        .modal.active { display: flex; }
+        .modal-content { background: #1e293b; border-radius: 16px; padding: 32px; width: 100%; max-width: 480px; }
+        .modal h2 { font-size: 20px; margin-bottom: 24px; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 8px; color: #94a3b8; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px 16px; background: #0f172a; border: 1px solid #334155; border-radius: 8px; color: white; font-size: 14px; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: #0ea5e9; }
+        .form-actions { display: flex; gap: 12px; justify-content: flex-end; }
+        .btn { padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; border: none; }
+        .btn-primary { background: linear-gradient(135deg, #0ea5e9, #8b5cf6); color: white; }
+        .btn-secondary { background: #334155; color: white; }
+        
+        .empty-state { text-align: center; padding: 40px; color: #64748b; font-size: 14px; }
+        
+        .task-menu { position: absolute; right: 8px; top: 8px; background: none; border: none; color: #64748b; cursor: pointer; padding: 4px; }
+        .task-menu:hover { color: white; }
+        .task-card { position: relative; }
+        
+        .delete-btn { position: absolute; right: 8px; top: 8px; background: none; border: none; color: #64748b; cursor: pointer; padding: 4px; font-size: 16px; }
+        .delete-btn:hover { color: #ef4444; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🎯 Journey Forge Task Manager</h1>
+        <button class="header-btn" onclick="openModal()">+ Add Task</button>
+    </div>
+    
+    <div class="kanban">
+        <!-- To Do -->
+        <div class="column">
+            <div class="column-header column-todo">
+                <h2>📋 To Do</h2>
+                <span class="task-count" id="todo-count">0</span>
+            </div>
+            <div class="task-list drop-zone" data-status="todo" id="todo"></div>
+        </div>
+        
+        <!-- In Progress -->
+        <div class="column">
+            <div class="column-header column-inprogress">
+                <h2>🔥 In Progress</h2>
+                <span class="task-count" id="inprogress-count">0</span>
+            </div>
+            <div class="task-list drop-zone" data-status="inprogress" id="inprogress"></div>
+        </div>
+        
+        <!-- Done -->
+        <div class="column">
+            <div class="column-header column-done">
+                <h2>✅ Done</h2>
+                <span class="task-count" id="done-count">0</span>
+            </div>
+            <div class="task-list drop-zone" data-status="done" id="done"></div>
+        </div>
+    </div>
+    
+    <!-- Add Task Modal -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <h2>Add New Task</h2>
+            <form id="taskForm">
+                <div class="form-group">
+                    <label>Task Title</label>
+                    <input type="text" id="taskTitle" placeholder="Enter task title..." required>
+                </div>
+                <div class="form-group">
+                    <label>Priority</label>
+                    <select id="taskPriority">
+                        <option value="high">High</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="low">Low</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Assign To</label>
+                    <select id="taskAgent">
+                        <option value="me">Potential Bot (Delegate)</option>
+                        <option value="content-chief">Content Chief</option>
+                        <option value="social-lead">Social Media Lead</option>
+                        <option value="seo-specialist">SEO Specialist</option>
+                        <option value="market-analyst">Market Analyst</option>
+                        <option value="creative-designer">Creative Designer</option>
+                        <option value="web-developer">Web Developer</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Description (Optional)</label>
+                    <textarea id="taskDesc" rows="3" placeholder="Add details..."></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Add Task</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        // Task storage
+        let tasks = JSON.parse(localStorage.getItem('journeyforge-tasks')) || [
+            { id: 1, title: 'Launch Social Media Accounts', priority: 'high', agent: 'social-lead', status: 'todo', desc: 'Create @journeyforge on Twitter & Instagram' },
+            { id: 2, title: 'Set Up Email Newsletter', priority: 'medium', agent: 'content-chief', status: 'todo', desc: 'Mailchimp or similar' },
+            { id: 3, title: 'Influencer Outreach', priority: 'medium', agent: 'social-lead', status: 'todo', desc: 'Contact travel bloggers' },
+            { id: 4, title: 'Multilogin Browser Setup', priority: 'high', agent: 'me', status: 'inprogress', desc: 'Fix automation issues' },
+            { id: 5, title: 'SEO Implementation', priority: 'medium', agent: 'seo-specialist', status: 'inprogress', desc: 'Optimize site for keywords' },
+            { id: 6, title: 'Marketing Website v2', priority: 'high', agent: 'web-developer', status: 'done', desc: 'World-class multi-page site' },
+            { id: 7, title: 'Seoul Blog Post', priority: 'high', agent: 'content-chief', status: 'done', desc: 'Complete travel guide' },
+            { id: 8, title: 'Tokyo Blog Post', priority: 'high', agent: 'content-chief', status: 'done', desc: 'Complete travel guide' },
+            { id: 9, title: 'Perth Blog Post', priority: 'medium', agent: 'me', status: 'done', desc: '10 things to do' },
+            { id: 10, title: 'Birmingham Blog Post', priority: 'medium', agent: 'me', status: 'done', desc: '10 things to do' }
+        ];
+        
+        const agentNames = {
+            'me': '🤖 Potential Bot',
+            'content-chief': '✍️ Content Chief',
+            'social-lead': '📱 Social Media Lead',
+            'seo-specialist': '🔍 SEO Specialist',
+            'market-analyst': '📊 Market Analyst',
+            'creative-designer': '🎨 Creative Designer',
+            'web-developer': '🌐 Web Developer'
+        };
+        
+        const priorityTags = {
+            'high': { class: 'tag-high', text: 'High' },
+            'medium': { class: 'tag-medium', text: 'Medium' },
+            'low': { class: 'tag-low', text: 'Low' }
+        };
+        
+        function renderTasks() {
+            document.getElementById('todo').innerHTML = '';
+            document.getElementById('inprogress').innerHTML = '';
+            document.getElementById('done').innerHTML = '';
+            
+            let counts = { todo: 0, inprogress: 0, done: 0 };
+            
+            tasks.forEach(task => {
+                const el = document.createElement('div');
+                el.className = 'task-card';
+                el.draggable = true;
+                el.dataset.id = task.id;
+                el.innerHTML = `
+                    <div class="task-title">${task.title}</div>
+                    <button class="delete-btn" onclick="deleteTask(${task.id})">×</button>
+                    <div class="task-meta">
+                        <span class="task-tag ${priorityTags[task.priority].class}">${priorityTags[task.priority].text}</span>
+                        <span class="task-tag tag-agent">${agentNames[task.agent]}</span>
+                    </div>
+                `;
+                
+                // Drag events
+                el.addEventListener('dragstart', handleDragStart);
+                el.addEventListener('dragend', handleDragEnd);
+                
+                document.getElementById(task.status).appendChild(el);
+                counts[task.status]++;
+            });
+            
+            document.getElementById('todo-count').textContent = counts.todo;
+            document.getElementById('inprogress-count').textContent = counts.inprogress;
+            document.getElementById('done-count').textContent = counts.done;
+        }
+        
+        let draggedTask = null;
+        
+        function handleDragStart(e) {
+            draggedTask = tasks.find(t => t.id == e.target.dataset.id);
+            e.target.classList.add('dragging');
+        }
+        
+        function handleDragEnd(e) {
+            e.target.classList.remove('dragging');
+            document.querySelectorAll('.drop-zone').forEach(z => z.classList.remove('drag-over'));
+        }
+        
+        // Drop zones
+        document.querySelectorAll('.drop-zone').forEach(zone => {
+            zone.addEventListener('dragover', e => {
+                e.preventDefault();
+                zone.classList.add('drag-over');
+            });
+            zone.addEventListener('dragleave', e => {
+                zone.classList.remove('drag-over');
+            });
+            zone.addEventListener('drop', e => {
+                e.preventDefault();
+                zone.classList.remove('drag-over');
+                if (draggedTask) {
+                    draggedTask.status = zone.dataset.status;
+                    saveTasks();
+                    renderTasks();
+                }
+            });
+        });
+        
+        function saveTasks() {
+            localStorage.setItem('journeyforge-tasks', JSON.stringify(tasks));
+        }
+        
+        function deleteTask(id) {
+            if (confirm('Delete this task?')) {
+                tasks = tasks.filter(t => t.id !== id);
+                saveTasks();
+                renderTasks();
+            }
+        }
+        
+        // Modal
+        function openModal() {
+            document.getElementById('modal').classList.add('active');
+        }
+        
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+            document.getElementById('taskForm').reset();
+        }
+        
+        document.getElementById('taskForm').addEventListener('submit', e => {
+            e.preventDefault();
+            const newTask = {
+                id: Date.now(),
+                title: document.getElementById('taskTitle').value,
+                priority: document.getElementById('taskPriority').value,
+                agent: document.getElementById('taskAgent').value,
+                status: 'todo',
+                desc: document.getElementById('taskDesc').value
+            };
+            tasks.push(newTask);
+            saveTasks();
+            renderTasks();
+            closeModal();
+        });
+        
+        // Close modal on outside click
+        document.getElementById('modal').addEventListener('click', e => {
+            if (e.target.id === 'modal') closeModal();
+        });
+        
+        renderTasks();
+    </script>
+</body>
+</html>
