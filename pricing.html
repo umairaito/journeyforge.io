@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing - Journey Forge | Travel Planning for Everyone</title>
+    <meta name="description" content="Choose the perfect Journey Forge plan for your travel needs. Free, Premium, and Family tiers available.">
+    
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%230ea5e9'/%3E%3Cstop offset='100%25' stop-color='%238b5cf6'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='20' fill='url(%23g)'/%3E%3Ctext x='50' y='68' font-size='50' text-anchor='middle' fill='white'%3E✈%3C/text%3E%3C/svg%3E">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .pricing-hero {
+            background: linear-gradient(135deg, #0ea5e9 0%, #8b5cf6 100%);
+            padding: 80px 0;
+            text-align: center;
+            color: white;
+        }
+        .pricing-hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            color: white;
+        }
+        .pricing-hero p {
+            font-size: 1.25rem;
+            opacity: 0.95;
+        }
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+        .pricing-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+        }
+        .pricing-card.featured {
+            border: 3px solid #8b5cf6;
+        }
+        .pricing-card.featured::before {
+            content: 'Most Popular';
+            position: absolute;
+            top: 20px;
+            right: -35px;
+            background: #8b5cf6;
+            color: white;
+            padding: 5px 40px;
+            transform: rotate(45deg);
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        .pricing-card.free {
+            background: linear-gradient(180deg, #f8fafc 0%, white 100%);
+        }
+        .plan-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 10px;
+        }
+        .plan-price {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #0ea5e9;
+            margin: 20px 0;
+        }
+        .plan-price span {
+            font-size: 1rem;
+            color: #64748b;
+            font-weight: 400;
+        }
+        .plan-price .original {
+            font-size: 1.5rem;
+            color: #94a3b8;
+            text-decoration: line-through;
+            margin-right: 10px;
+        }
+        .plan-features {
+            list-style: none;
+            padding: 0;
+            margin: 30px 0;
+            text-align: left;
+        }
+        .plan-features li {
+            padding: 12px 0;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #475569;
+        }
+        .plan-features li:last-child {
+            border-bottom: none;
+        }
+        .plan-features .check {
+            color: #10b981;
+            font-weight: bold;
+        }
+        .plan-features .cross {
+            color: #ef4444;
+            font-weight: bold;
+        }
+        .btn-pricing {
+            display: inline-block;
+            width: 100%;
+            padding: 16px 32px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 12px;
+            text-decoration: none;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+        }
+        .btn-primary-pricing {
+            background: linear-gradient(135deg, #0ea5e9 0%, #8b5cf6 100%);
+            color: white;
+        }
+        .btn-primary-pricing:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(14, 165, 233, 0.4);
+        }
+        .btn-outline-pricing {
+            background: white;
+            color: #0ea5e9;
+            border: 2px solid #0ea5e9;
+        }
+        .btn-outline-pricing:hover {
+            background: #0ea5e9;
+            color: white;
+        }
+        .pricing-faq {
+            max-width: 800px;
+            margin: 80px auto;
+            padding: 0 20px;
+        }
+        .pricing-faq h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            color: #1e293b;
+        }
+        .faq-item {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+        .faq-question {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #1e293b;
+            margin-bottom: 10px;
+        }
+        .faq-answer {
+            color: #64748b;
+            line-height: 1.6;
+        }
+        .cta-section {
+            background: linear-gradient(135deg, #0ea5e9 0%, #8b5cf6 100%);
+            padding: 80px 0;
+            text-align: center;
+            color: white;
+            margin-top: 80px;
+        }
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: white;
+        }
+        .cta-section p {
+            font-size: 1.25rem;
+            opacity: 0.95;
+            margin-bottom: 30px;
+        }
+        @media (max-width: 768px) {
+            .pricing-hero h1 {
+                font-size: 2.5rem;
+            }
+            .plan-price {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo"><div class="logo-icon">✈</div>Journey Forge</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="features.html">Features</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div class="nav-cta"><a href="https://wanderlust-1d8c9fa0.base44.app/" class="btn btn-primary">Get Started →</a></div>
+            <div class="mobile-toggle"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+
+    <section class="pricing-hero">
+        <div class="container">
+            <h1>Simple, Transparent Pricing</h1>
+            <p>Choose the perfect plan for your travel adventures. Start free, upgrade anytime.</p>
+        </div>
+    </section>
+
+    <section class="pricing-grid">
+        <div class="pricing-card free">
+            <div class="plan-name">Free</div>
+            <div class="plan-price">$0<span>/month</span></div>
+            <ul class="plan-features">
+                <li><span class="check">✓</span> Basic trip planning</li>
+                <li><span class="check">✓</span> Up to 3 itineraries</li>
+                <li><span class="check">✓</span> Community travel tips</li>
+                <li><span class="check">✓</span> Destination guides</li>
+                <li><span class="cross">✗</span> Advanced AI recommendations</li>
+                <li><span class="cross">✗</span> Offline maps</li>
+                <li><span class="cross">✗</span> Priority support</li>
+            </ul>
+            <a href="https://wanderlust-1d8c9fa0.base44.app/" class="btn-pricing btn-outline-pricing">Get Started Free</a>
+        </div>
+
+        <div class="pricing-card featured">
+            <div class="plan-name">Premium</div>
+            <div class="plan-price"><span class="original">$9.99</span>$4.99<span>/month</span></div>
+            <p style="color: #8b5cf6; font-size: 0.9rem; margin-top: -10px;">Save 50% with annual</p>
+            <ul class="plan-features">
+                <li><span class="check">✓</span> Everything in Free</li>
+                <li><span class="check">✓</span> <strong>Unlimited itineraries</strong></li>
+                <li><span class="check">✓</span> <strong>Advanced AI recommendations</strong></li>
+                <li><span class="check">✓</span> Offline maps & guides</li>
+                <li><span class="check">✓</span> Custom travel templates</li>
+                <li><span class="check">✓</span> Priority email support</li>
+                <li><span class="check">✓</span> Early access to new features</li>
+            </ul>
+            <a href="https://wanderlust-1d8c9fa0.base44.app/" class="btn-pricing btn-primary-pricing">Start Premium Trial</a>
+        </div>
+
+        <div class="pricing-card">
+            <div class="plan-name">Family</div>
+            <div class="plan-price"><span class="original">$19.99</span>$9.99<span>/month</span></div>
+            <p style="color: #8b5cf6; font-size: 0.9rem; margin-top: -10px;">Save 50% with annual</p>
+            <ul class="plan-features">
+                <li><span class="check">✓</span> Everything in Premium</li>
+                <li><span class="check">✓</span> <strong>Up to 6 family members</strong></li>
+                <li><span class="check">✓</span> Family trip coordination</li>
+                <li><span class="check">✓</span> Shared itineraries</li>
+                <li><span class="check">✓</span> Family budget tracking</li>
+                <li><span class="check">✓</span> Dedicated support</li>
+                <li><span class="check">✓</span> Exclusive family deals</li>
+            </ul>
+            <a href="https://wanderlust-1d8c9fa0.base44.app/" class="btn-pricing btn-outline-pricing">Start Family Plan</a>
+        </div>
+    </section>
+
+    <section class="pricing-faq">
+        <h2>Frequently Asked Questions</h2>
+        
+        <div class="faq-item">
+            <div class="faq-question">Can I switch plans anytime?</div>
+            <div class="faq-answer">Yes! You can upgrade or downgrade your plan at any time. Changes take effect immediately and we'll prorate your billing.</div>
+        </div>
+        
+        <div class="faq-item">
+            <div class="faq-question">Is there a free trial for Premium?</div>
+            <div class="faq-answer">Absolutely. New Premium users get a 14-day free trial with full access to all premium features. No credit card required.</div>
+        </div>
+        
+        <div class="faq-item">
+            <div class="faq-question">What payment methods do you accept?</div>
+            <div class="faq-answer">We accept all major credit cards, PayPal, and Apple Pay. All payments are processed securely through Stripe.</div>
+        </div>
+        
+        <div class="faq-item">
+            <div class="faq-question">Can I cancel anytime?</div>
+            <div class="faq-answer">Yes, you can cancel your subscription at any time. You'll continue to have access until the end of your billing period.</div>
+        </div>
+        
+        <div class="faq-item">
+            <div class="faq-question">Do you offer refunds?</div>
+            <div class="faq-answer">We offer a 30-day money-back guarantee for all paid plans. If you're not satisfied, contact us for a full refund.</div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2>Ready to Start Your Adventure?</h2>
+            <p>Join thousands of travelers planning their perfect trips with Journey Forge.</p>
+            <a href="https://wanderlust-1d8c9fa0.base44.app/" class="btn btn-white" style="background: white; color: #0ea5e9; padding: 16px 40px; border-radius: 12px; text-decoration: none; font-weight: 600; display: inline-block;">Get Started for Free</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="logo"><div class="logo-icon">✈</div>Journey Forge</div>
+                    <p>Your personal travel companion for creating unforgettable adventures.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Product</h4>
+                    <a href="features.html">Features</a>
+                    <a href="pricing.html">Pricing</a>
+                    <a href="blog.html">Blog</a>
+                </div>
+                <div class="footer-links">
+                    <h4>Company</h4>
+                    <a href="about.html">About</a>
+                    <a href="contact.html">Contact</a>
+                </div>
+                <div class="footer-links">
+                    <h4>Legal</h4>
+                    <a href="#">Privacy</a>
+                    <a href="#">Terms</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Journey Forge. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
