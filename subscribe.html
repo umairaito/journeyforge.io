@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subscribe - Journey Forge</title>
+    <meta name="description" content="Subscribe to Journey Forge newsletter for travel tips and exclusive offers.">
+    
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%230ea5e9'/%3E%3Cstop offset='100%25' stop-color='%238b5cf6'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='20' fill='url(%23g)'/%3E%3Ctext x='50' y='68' font-size='50' text-anchor='middle' fill='white'%3E✈%3C/text%3E%3C/svg%3E">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Outfit', sans-serif; background: linear-gradient(135deg, #0ea5e9 0%, #8b5cf6 100%); min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+        
+        .container {
+            background: white;
+            border-radius: 24px;
+            padding: 60px 40px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+        }
+        
+        .icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            color: #1e293b;
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        p {
+            color: #64748b;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        input[type="email"] {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+            font-family: inherit;
+        }
+        
+        input[type="email"]:focus {
+            outline: none;
+            border-color: #0ea5e9;
+        }
+        
+        button {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #0ea5e9 0%, #8b5cf6 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            font-family: inherit;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(14, 165, 233, 0.4);
+        }
+        
+        .benefits {
+            text-align: left;
+            margin: 30px 0;
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 12px;
+        }
+        
+        .benefits li {
+            padding: 8px 0;
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #475569;
+        }
+        
+        .check { color: #10b981; }
+        
+        .note {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            margin-top: 20px;
+        }
+        
+        .success {
+            display: none;
+            color: #10b981;
+            font-weight: 600;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="icon">✈️</div>
+        <h1>Join the Journey</h1>
+        <p>Get travel tips, destination guides, and exclusive deals delivered to your inbox.</p>
+        
+        <form id="signup-form" onsubmit="handleSubmit(event)">
+            <div class="form-group">
+                <input type="email" name="email" placeholder="Enter your email" required>
+            </div>
+            <button type="submit">Subscribe</button>
+        </form>
+        
+        <div class="success" id="success-message">
+            ✓ Thanks for subscribing! Check your inbox to confirm.
+        </div>
+        
+        <ul class="benefits">
+            <li><span class="check">✓</span> Weekly travel tips</li>
+            <li><span class="check">✓</span> Exclusive early access</li>
+            <li><span class="check">✓</span> Destination inspiration</li>
+            <li><span class="check">✓</span> Special offers & discounts</li>
+        </ul>
+        
+        <p class="note">No spam, unsubscribe anytime. We respect your privacy.</p>
+    </div>
+    
+    <script>
+        function handleSubmit(e) {
+            e.preventDefault();
+            const email = e.target.email.value;
+            // Store in localStorage for now (integrate with email service later)
+            const subscribers = JSON.parse(localStorage.getItem('journeyforge_subscribers') || '[]');
+            subscribers.push({ email: email, date: new Date().toISOString() });
+            localStorage.setItem('journeyforge_subscribers', JSON.stringify(subscribers));
+            
+            document.getElementById('signup-form').style.display = 'none';
+            document.getElementById('success-message').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
