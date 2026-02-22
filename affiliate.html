@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Journey Forge Affiliate Program - Earn While You Travel</title>
+    <meta name="description" content="Join the Journey Forge affiliate program and earn 30% commission for every referral. Travel content creators welcome!">
+    
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%230ea5e9'/%3E%3Cstop offset='100%25' stop-color='%238b5cf6'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='20' fill='url(%23g)'/%3E%3Ctext x='50' y='68' font-size='50' text-anchor='middle' fill='white'%3E✈%3C/text%3E%3C/svg%3E">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Outfit', sans-serif; background: #0f172a; color: white; }
+        
+        .hero {
+            background: linear-gradient(135deg, #0ea5e9 0%, #8b5cf6 100%);
+            padding: 100px 0;
+            text-align: center;
+        }
+        
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .subtitle {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+        
+        .commission-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+        
+        .commission-badge span {
+            color: #fef08a;
+            font-size: 2.5rem;
+        }
+        
+        .benefits {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            padding: 80px 0;
+        }
+        
+        .benefit-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .benefit-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255,255,255,0.08);
+        }
+        
+        .benefit-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        
+        .benefit-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: #e2e8f0;
+        }
+        
+        .benefit-card p {
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+        
+        .how-it-works {
+            background: white;
+            color: #1e293b;
+            padding: 80px 0;
+        }
+        
+        .how-it-works h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+        }
+        
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+        }
+        
+        .step {
+            text-align: center;
+        }
+        
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #0ea5e9, #8b5cf6);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 auto 20px;
+        }
+        
+        .step h3 {
+            margin-bottom: 10px;
+        }
+        
+        .step p {
+            color: #64748b;
+        }
+        
+        .join-section {
+            background: linear-gradient(135deg, #0ea5e9 0%, #8b5cf6 100%);
+            padding: 100px 0;
+            text-align: center;
+        }
+        
+        .join-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .join-section p {
+            font-size: 1.2rem;
+            opacity: 0.95;
+            margin-bottom: 40px;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #0ea5e9;
+            padding: 18px 50px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            border-radius: 14px;
+            text-decoration: none;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            padding: 60px 0;
+            border-top: 1px solid rgba(255,255,255);
+            margin-top: 60px,0.1;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #fef08a;
+        }
+        
+        .stat-label {
+            color: #94a3b8;
+            margin-top: 5px;
+        }
+        
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .stats { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <div class="container">
+            <h1>Journey Forge Affiliate Program</h1>
+            <p class="subtitle">Earn 30% commission for every traveler you refer. Join thousands of content creators earning passive income.</p>
+            
+            <div class="commission-badge">
+                Earn <span>30%</span> on every referral
+            </div>
+            
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-number">$49.99</div>
+                    <div class="stat-label">Per Premium referral</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">$99.99</div>
+                    <div class="stat-label">Per Family referral</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">Lifetime</div>
+                    <div class="stat-label">Recurring commissions</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="benefits">
+            <div class="benefit-card">
+                <div class="benefit-icon">🎁</div>
+                <h3>Generous Commissions</h3>
+                <p>Earn 30% on every paid subscription. Lifetime commissions for as long as your referrals stay.</p>
+            </div>
+            
+            <div class="benefit-card">
+                <div class="benefit-icon">📊</div>
+                <h3>Real-Time Tracking</h3>
+                <p>Track clicks, conversions, and earnings in your dedicated affiliate dashboard.</p>
+            </div>
+            
+            <div class="benefit-card">
+                <div class="benefit-icon">🚀</div>
+                <h3>High Conversions</h3>
+                <p>Free to try means higher conversion rates. Our users love the product!</p>
+            </div>
+            
+            <div class="benefit-card">
+                <div class="benefit-icon">💬</div>
+                <h3>Dedicated Support</h3>
+                <p>Get a dedicated affiliate manager to help maximize your earnings.</p>
+            </div>
+            
+            <div class="benefit-card">
+                <div class="benefit-icon">🎯</div>
+                <h3>Custom Links</h3>
+                <p>Get personalized tracking links for each of your platforms and campaigns.</p>
+            </div>
+            
+            <div class="benefit-card">
+                <div class="benefit-icon">✈️</div>
+                <h3>Travel Content</h3>
+                <p>Access exclusive content, banners, and promotional materials.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="how-it-works">
+        <div class="container">
+            <h2>How It Works</h2>
+            
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Sign Up</h3>
+                    <p>Create your affiliate account in seconds. It's free!</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Share Your Link</h3>
+                    <p>Get your unique referral link and share it with your audience.</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Earn Commission</h3>
+                    <p>Get paid 30% for every Premium subscription you refer.</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Get Paid</h3>
+                    <p>Receive payouts via PayPal or bank transfer monthly.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="join-section">
+        <div class="container">
+            <h2>Ready to Start Earning?</h2>
+            <p>Join our affiliate program today and start monetizing your travel content.</p>
+            <a href="https://wanderlust-1d8c9fa0.base44.app/" class="cta-button">Become an Affiliate →</a>
+        </div>
+    </div>
+    
+    <footer style="background: #0f172a; padding: 40px 0; text-align: center; color: #64748b;">
+        <div class="container">
+            <p>© 2026 Journey Forge. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
