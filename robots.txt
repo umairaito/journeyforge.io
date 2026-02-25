@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://umairaito.github.io/journeyforge.io/sitemap.xml
+
+Host: https://umairaito.github.io/journeyforge.io
